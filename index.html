@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stay Connected - Columbia Association</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #1C3A6E;
+    --navy-dark: #142d57;
+    --navy-light: #e8edf5;
+    --green: #3A7D3A;
+    --green-light: #eaf3de;
+    --gold: #E8A020;
+    --gold-light: #fdf3e0;
+    --gray-bg: #F4F6F8;
+    --gray-mid: #d0d5dd;
+    --gray-text: #6b7280;
+    --text-dark: #1a1a2e;
+    --white: #ffffff;
+    --lakefront-accent: #1a6b8a;
+    --lakefront-light: #e0f2f8;
+    --families-accent: #7a4a9e;
+    --families-light: #f0eaf8;
+  }
+
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    color: var(--text-dark);
+    background: var(--white);
+    line-height: 1.6;
+  }
+
+  /* ---- HERO ---- */
+  .hero {
+    background: var(--navy);
+    padding: 80px 24px 72px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 60% 40%, rgba(58,125,58,0.18) 0%, transparent 65%),
+                radial-gradient(ellipse at 20% 80%, rgba(232,160,32,0.12) 0%, transparent 55%);
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+  .hero h1 {
+    font-family: 'Lora', serif;
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 600;
+    color: var(--white);
+    line-height: 1.2;
+    max-width: 700px;
+    margin: 0 auto 20px;
+  }
+  .hero p {
+    font-size: 18px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.8);
+    max-width: 560px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  /* ---- MAIN CONTENT ---- */
+  .content {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 64px 24px 80px;
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 12px;
+  }
+  .section-heading {
+    font-family: 'Lora', serif;
+    font-size: 28px;
+    font-weight: 500;
+    color: var(--navy);
+    margin-bottom: 8px;
+  }
+  .section-sub {
+    font-size: 16px;
+    color: var(--gray-text);
+    margin-bottom: 40px;
+  }
+
+  /* ---- NEWSLETTER CARDS ---- */
+  .newsletter-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    margin-bottom: 56px;
+  }
+
+  .newsletter-card {
+    border: 1.5px solid var(--gray-mid);
+    border-radius: 16px;
+    padding: 28px 28px 24px;
+    background: var(--white);
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
+    position: relative;
+    overflow: hidden;
+  }
+  .newsletter-card:hover {
+    border-color: var(--navy);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(28,58,110,0.1);
+  }
+  .newsletter-card.selected {
+    border-color: var(--green);
+    border-width: 2px;
+    box-shadow: 0 0 0 4px rgba(58,125,58,0.1);
+  }
+  .newsletter-card.selected .card-check {
+    background: var(--green);
+    border-color: var(--green);
+  }
+  .newsletter-card.selected .card-check::after {
+    opacity: 1;
+  }
+
+  /* Color accent bars */
+  .card-accent {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    border-radius: 16px 16px 0 0;
+  }
+  .card--digest .card-accent { background: var(--navy); }
+  .card--families .card-accent { background: var(--families-accent); }
+  .card--lakefront .card-accent { background: var(--lakefront-accent); }
+
+  .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+  }
+  .card-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+  }
+  .card--digest .card-icon { background: var(--navy-light); }
+  .card--families .card-icon { background: var(--families-light); }
+  .card--lakefront .card-icon { background: var(--lakefront-light); }
+
+  .card-check {
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    border: 2px solid var(--gray-mid);
+    background: var(--white);
+    flex-shrink: 0;
+    position: relative;
+    transition: all 0.15s;
+  }
+  .card-check::after {
+    content: '';
+    position: absolute;
+    top: 4px; left: 7px;
+    width: 6px; height: 10px;
+    border: 2px solid white;
+    border-top: none; border-left: none;
+    transform: rotate(45deg);
+    opacity: 0;
+    transition: opacity 0.15s;
+  }
+
+  .card-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 8px;
+  }
+  .card--digest .card-tag { background: var(--navy-light); color: var(--navy); }
+  .card--families .card-tag { background: var(--families-light); color: var(--families-accent); }
+  .card--lakefront .card-tag { background: var(--lakefront-light); color: var(--lakefront-accent); }
+
+  .card h3 {
+    font-family: 'Lora', serif;
+    font-size: 19px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 10px;
+    line-height: 1.3;
+  }
+  .card p {
+    font-size: 14px;
+    color: var(--gray-text);
+    line-height: 1.65;
+    margin-bottom: 18px;
+  }
+  .card-meta {
+    display: flex;
+    gap: 16px;
+    font-size: 12px;
+    color: var(--gray-text);
+    border-top: 1px solid var(--gray-bg);
+    padding-top: 14px;
+  }
+  .card-meta span { display: flex; align-items: center; gap: 4px; }
+  .card-meta svg { opacity: 0.5; }
+
+  /* ---- FORM ---- */
+  .form-section {
+    background: var(--gray-bg);
+    border-radius: 16px;
+    padding: 40px 40px 36px;
+  }
+  .form-heading {
+    font-family: 'Lora', serif;
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+  .form-sub {
+    font-size: 14px;
+    color: var(--gray-text);
+    margin-bottom: 28px;
+  }
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  @media (max-width: 560px) {
+    .form-row { grid-template-columns: 1fr; }
+    .form-section { padding: 28px 20px 24px; }
+  }
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .form-group.full { grid-column: 1 / -1; }
+  label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--navy);
+    letter-spacing: 0.02em;
+  }
+  input[type="text"],
+  input[type="email"] {
+    height: 44px;
+    border: 1.5px solid var(--gray-mid);
+    border-radius: 8px;
+    padding: 0 14px;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 15px;
+    color: var(--text-dark);
+    background: var(--white);
+    transition: border-color 0.15s, box-shadow 0.15s;
+    outline: none;
+  }
+  input[type="text"]:focus,
+  input[type="email"]:focus {
+    border-color: var(--navy);
+    box-shadow: 0 0 0 3px rgba(28,58,110,0.1);
+  }
+
+  .selection-summary {
+    background: var(--white);
+    border: 1.5px solid var(--gray-mid);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: var(--gray-text);
+  }
+  .selection-summary strong {
+    color: var(--navy);
+    font-weight: 600;
+  }
+  .selection-summary .none-selected {
+    color: #e8a020;
+  }
+
+  .submit-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--navy);
+    color: var(--white);
+    border: none;
+    border-radius: 8px;
+    padding: 0 28px;
+    height: 48px;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+    letter-spacing: 0.02em;
+  }
+  .submit-btn:hover { background: var(--navy-dark); }
+  .submit-btn:active { transform: scale(0.98); }
+  .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .form-legal {
+    margin-top: 14px;
+    font-size: 12px;
+    color: var(--gray-text);
+    line-height: 1.6;
+  }
+  .form-legal a { color: var(--navy); }
+
+  /* ---- SUCCESS STATE ---- */
+  .success-state {
+    text-align: center;
+    padding: 48px 24px;
+    display: none;
+  }
+  .success-icon {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: var(--green-light);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 20px;
+  }
+  .success-state h3 {
+    font-family: 'Lora', serif;
+    font-size: 24px;
+    color: var(--navy);
+    margin-bottom: 8px;
+  }
+  .success-state p {
+    font-size: 15px;
+    color: var(--gray-text);
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  /* ---- MANAGEMENT MODE BANNER ---- */
+  .mgmt-banner {
+    background: var(--navy-light);
+    border: 1px solid rgba(28,58,110,0.15);
+    border-radius: 10px;
+    padding: 14px 18px;
+    font-size: 14px;
+    color: var(--navy);
+    margin-bottom: 32px;
+    display: none;
+    align-items: center;
+    gap: 10px;
+  }
+  .mgmt-banner.visible { display: flex; }
+
+  /* ---- FOOTER WIDGET DEMO ---- */
+  .footer-demo {
+    background: var(--navy-dark);
+    padding: 48px 24px;
+    margin-top: 0;
+  }
+  .footer-demo-inner {
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  .footer-demo-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    padding-bottom: 10px;
+  }
+  .footer-widget-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+  @media (max-width: 640px) { .footer-widget-grid { grid-template-columns: 1fr; gap: 24px; } }
+  .footer-copy h4 {
+    font-family: 'Lora', serif;
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+  .footer-copy p {
+    font-size: 14px;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.6;
+  }
+  .footer-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .footer-input {
+    height: 44px;
+    border-radius: 8px;
+    border: 1.5px solid rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.08);
+    padding: 0 14px;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 15px;
+    color: var(--white);
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .footer-input::placeholder { color: rgba(255,255,255,0.4); }
+  .footer-input:focus { border-color: rgba(255,255,255,0.5); }
+  .footer-btn {
+    height: 44px;
+    border-radius: 8px;
+    border: none;
+    background: var(--green);
+    color: var(--white);
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s;
+    letter-spacing: 0.03em;
+  }
+  .footer-btn:hover { background: #2e6b2e; }
+  .footer-note {
+    font-size: 11px;
+    color: rgba(255,255,255,0.35);
+  }
+
+  /* ---- ANNOTATION STRIPE ---- */
+  .annotation {
+    background: #fffbeb;
+    border-top: 2px solid var(--gold);
+    border-bottom: 2px solid var(--gold);
+    padding: 14px 24px;
+    font-size: 13px;
+    color: #7a5800;
+    text-align: center;
+  }
+  .annotation strong { font-weight: 700; }
+
+
+  .unsub-row {
+    text-align: center;
+    margin-bottom: 32px;
+    font-size: 14px;
+    color: var(--gray-text);
+  }
+  .unsub-row a {
+    color: var(--navy);
+    text-decoration: underline;
+    margin-left: 6px;
+  }
+  .unsub-all-btn {
+    margin-left: auto;
+    font-size: 13px;
+    color: #c0392b;
+    text-decoration: underline;
+    white-space: nowrap;
+  }
+</style>
+</head>
+<body>
+
+<!-- ANNOTATION: prototype context -->
+<div class="annotation">
+  <strong>Prototype - for review only.</strong> Newsletter cards are interactive. Footer widget shown below for context.
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">Columbia Association Newsletters</div>
+  <h1>Stay connected to your community.</h1>
+  <p>Choose the newsletters that fit your life in Columbia - and unsubscribe or update your preferences anytime.</p>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="content">
+
+  <!-- Management mode banner (visible when ?email= param present) -->
+  <div class="mgmt-banner" id="mgmtBanner">
+    <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="#1C3A6E" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/></svg>
+    <span>We found your preferences. Update your selections below and click <strong>Save changes</strong>.</span>
+    <a href="#" class="unsub-all-btn" onclick="showUnsubModal(event)">Unsubscribe from all</a>
+  </div>
+
+  <!-- Newsletter selection -->
+  <div class="section-label">Our newsletters</div>
+  <h2 class="section-heading">Pick what's right for you.</h2>
+  <p class="section-sub">Select one, two, or all three. You can update your choices at any time.</p>
+
+  <div class="newsletter-grid">
+
+    <!-- CA Digest -->
+    <div class="newsletter-card card--digest" onclick="toggleCard(this)" data-list="ca-digest">
+      <div class="card-accent"></div>
+      <div class="card-top">
+        <div class="card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1C3A6E" stroke-width="1.8"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        </div>
+        <div class="card-check"></div>
+      </div>
+      <div class="card-tag">Flagship</div>
+      <h3>CA Digest</h3>
+      <p>Your twice-monthly overview of what's happening across Columbia Association - programs, community news, membership updates, and more.</p>
+      <div class="card-meta">
+        <span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Twice monthly
+        </span>
+        <span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          All residents
+        </span>
+      </div>
+    </div>
+
+    <!-- Families Edition -->
+    <div class="newsletter-card card--families" onclick="toggleCard(this)" data-list="families-edition">
+      <div class="card-accent"></div>
+      <div class="card-top">
+        <div class="card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7a4a9e" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <div class="card-check"></div>
+      </div>
+      <div class="card-tag">For families</div>
+      <h3>Do More with CA - Families Edition</h3>
+      <p>Youth programs, family activities, aquatics, camps, and everything your household needs to make the most of CA membership.</p>
+      <div class="card-meta">
+        <span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Monthly
+        </span>
+        <span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          Families &amp; parents
+        </span>
+      </div>
+    </div>
+
+    <!-- Lakefront Live -->
+    <div class="newsletter-card card--lakefront" onclick="toggleCard(this)" data-list="lakefront-live">
+      <div class="card-accent"></div>
+      <div class="card-top">
+        <div class="card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1a6b8a" stroke-width="1.8"><path d="M3 18c3.33-2 6.67-2 10 0s6.67 2 10 0"/><path d="M3 13c3.33-2 6.67-2 10 0s6.67 2 10 0"/><circle cx="12" cy="6" r="3"/></svg>
+        </div>
+        <div class="card-check"></div>
+      </div>
+      <div class="card-tag">Lakefront</div>
+      <h3>Do More with CA - Lakefront Live</h3>
+      <p>Concerts, festivals, waterfront events, and the full seasonal lineup at Columbia's lakefront - your guide to the best of summer on the water.</p>
+      <div class="card-meta">
+        <span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Seasonal
+        </span>
+        <span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          Events &amp; outdoor fans
+        </span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FORM -->
+  <div class="form-section">
+    <div id="formContent">
+      <h3 class="form-heading">Almost there.</h3>
+      <p class="form-sub">Enter your name and email to complete your subscription.</p>
+
+      <div class="selection-summary" id="selectionSummary">
+        <span class="none-selected">No newsletters selected yet - choose one or more above.</span>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="firstName">First name</label>
+          <input type="text" id="firstName" placeholder="Jane" autocomplete="given-name">
+        </div>
+        <div class="form-group">
+          <label for="lastName">Last name</label>
+          <input type="text" id="lastName" placeholder="Smith" autocomplete="family-name">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group full">
+          <label for="email">Email address</label>
+          <input type="email" id="email" placeholder="jane@example.com" autocomplete="email">
+        </div>
+      </div>
+
+      <button class="submit-btn" id="submitBtn" onclick="handleSubmit()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        Subscribe to selected newsletters
+      </button>
+
+      <p class="form-legal">
+        By subscribing you agree to Columbia Association's <a href="#">terms of use</a> and <a href="#">privacy policy</a>. You can unsubscribe or update your preferences at any time using the link in any email we send.
+      </p>
+    </div>
+
+    <!-- Success state -->
+    <div class="success-state" id="successState">
+      <div class="success-icon">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#3A7D3A" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <h3>You're subscribed!</h3>
+      <p>Check your inbox for a confirmation email. You can update your preferences anytime using the link in any newsletter.</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- UNSUBSCRIBE ALL -->
+<div style="text-align:center; padding: 24px 24px 0;">
+  <div class="unsub-row">
+    <span>Already a subscriber and want to stop all CA emails?</span>
+    <a href="#" onclick="showUnsubModal(event)">Unsubscribe from everything</a>
+  </div>
+</div>
+
+<!-- FOOTER WIDGET DEMO -->
+<div class="footer-demo">
+  <div class="footer-demo-inner">
+    <div class="footer-demo-label">Footer newsletter widget - shown in context</div>
+    <div class="footer-widget-grid">
+      <div class="footer-copy">
+        <h4>Stay in the know.</h4>
+        <p>Get Columbia Association news, events, and programs delivered to your inbox. Pick your newsletters on the next page.</p>
+      </div>
+      <div class="footer-form">
+        <input class="footer-input" type="email" placeholder="Your email address">
+        <button class="footer-btn" onclick="footerSubmit()">Choose my newsletters</button>
+        <span class="footer-note">Takes you to the full preference page. Or <a href="#" onclick="showUnsubModal(event)" style="color:rgba(255,255,255,0.5);text-decoration:underline;">unsubscribe from all CA emails</a>.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const selected = new Set();
+
+  function toggleCard(card) {
+    const list = card.dataset.list;
+    if (selected.has(list)) {
+      selected.delete(list);
+      card.classList.remove('selected');
+    } else {
+      selected.add(list);
+      card.classList.add('selected');
+    }
+    updateSummary();
+  }
+
+  const listNames = {
+    'ca-digest': 'CA Digest',
+    'families-edition': 'Do More - Families Edition',
+    'lakefront-live': 'Do More - Lakefront Live'
+  };
+
+  function updateSummary() {
+    const s = document.getElementById('selectionSummary');
+    if (selected.size === 0) {
+      s.innerHTML = '<span class="none-selected">No newsletters selected yet - choose one or more above.</span>';
+    } else {
+      const names = [...selected].map(k => `<strong>${listNames[k]}</strong>`).join(', ');
+      s.innerHTML = `Selected: ${names}`;
+    }
+  }
+
+  function handleSubmit() {
+    const email = document.getElementById('email').value;
+    const first = document.getElementById('firstName').value;
+    if (!email || !first) { alert('Please enter your name and email.'); return; }
+    if (selected.size === 0) { alert('Please select at least one newsletter above.'); return; }
+    // API call goes here (Mat wires to Mailchimp)
+    document.getElementById('formContent').style.display = 'none';
+    document.getElementById('successState').style.display = 'block';
+  }
+
+  function footerSubmit() {
+    const emailVal = document.querySelector('.footer-input').value;
+    const base = '/email-subscription/';
+    const url = emailVal ? `${base}?email=${encodeURIComponent(emailVal)}` : base;
+    // In production: window.location.href = url;
+    alert(`Would redirect to: ${url}`);
+  }
+
+  // Check for ?email= param (management mode)
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('email')) {
+    document.getElementById('mgmtBanner').classList.add('visible');
+    document.getElementById('email').value = params.get('email');
+    document.getElementById('submitBtn').textContent = '';
+    document.getElementById('submitBtn').innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Save changes';
+    // In production: fetch current subscriptions from Mailchimp and pre-select cards
+  }
+
+  function showUnsubModal(e) {
+    e.preventDefault();
+    const overlay = document.getElementById('unsubOverlay');
+    overlay.style.display = 'flex';
+    const emailField = document.getElementById('email').value;
+    if (emailField) document.getElementById('unsubEmail').value = emailField;
+  }
+  function closeUnsubModal(e) {
+    e.preventDefault();
+    document.getElementById('unsubOverlay').style.display = 'none';
+    document.getElementById('unsubSuccess').style.display = 'none';
+    document.getElementById('unsubForm').style.display = 'block';
+  }
+  function confirmUnsub() {
+    const email = document.getElementById('unsubEmail').value;
+    if (!email) { alert('Please enter your email address.'); return; }
+    // API call: global suppression in Mailchimp goes here
+    document.getElementById('unsubForm').style.display = 'none';
+    document.getElementById('unsubSuccess').style.display = 'block';
+  }
+</script>
+
+<!-- UNSUBSCRIBE ALL MODAL -->
+<div id="unsubOverlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:1000; align-items:center; justify-content:center;">
+  <div style="background:var(--white); border-radius:16px; padding:40px 36px; max-width:420px; width:90%; margin:0 auto; position:relative;">
+    <h3 style="font-family:'Lora',serif; font-size:22px; color:var(--navy); margin-bottom:10px;">Unsubscribe from all CA emails</h3>
+    <p style="font-size:14px; color:var(--gray-text); margin-bottom:24px; line-height:1.65;">Enter your email address and we'll remove you from all Columbia Association newsletters. This won't affect transactional emails like booking confirmations.</p>
+    <div id="unsubForm">
+      <div style="display:flex; flex-direction:column; gap:6px; margin-bottom:16px;">
+        <label style="font-size:13px; font-weight:600; color:var(--navy);">Email address</label>
+        <input type="email" id="unsubEmail" placeholder="your@email.com" style="height:44px; border:1.5px solid var(--gray-mid); border-radius:8px; padding:0 14px; font-size:15px; outline:none;">
+      </div>
+      <div style="display:flex; gap:12px; align-items:center;">
+        <button onclick="confirmUnsub()" style="height:44px; padding:0 24px; background:#c0392b; color:white; border:none; border-radius:8px; font-family:'Source Sans 3',sans-serif; font-size:14px; font-weight:600; cursor:pointer;">Unsubscribe from all</button>
+        <a href="#" onclick="closeUnsubModal(event)" style="font-size:14px; color:var(--gray-text);">Cancel</a>
+      </div>
+      <p style="font-size:12px; color:var(--gray-text); margin-top:14px;">You can resubscribe at any time by returning to this page.</p>
+    </div>
+    <div id="unsubSuccess" style="display:none; text-align:center; padding:16px 0;">
+      <div style="width:48px; height:48px; border-radius:50%; background:var(--green-light); display:flex; align-items:center; justify-content:center; margin:0 auto 16px;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3A7D3A" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <h4 style="font-family:'Lora',serif; font-size:18px; color:var(--navy); margin-bottom:8px;">You've been unsubscribed.</h4>
+      <p style="font-size:14px; color:var(--gray-text);">We've removed you from all CA newsletters. It may take up to 48 hours to take full effect.</p>
+      <a href="#" onclick="closeUnsubModal(event)" style="display:inline-block; margin-top:20px; font-size:14px; color:var(--navy); font-weight:600;">Close</a>
+    </div>
+  </div>
+</div>
+</body>
+</html>
